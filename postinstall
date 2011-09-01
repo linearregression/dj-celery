@@ -1,0 +1,14 @@
+#!/bin/sh
+
+app_name=minestrone
+data_dir=$HOME/data
+
+# Create the data directories on the first push:
+if [ ! -d $data_dir/media ] || [ ! -d $data_dir/static ] ; then
+    mkdir -p $data_dir/media $data_dir/static
+fi
+
+python $app_name/manage.py collectstatic --noinput
+
+python $app_name/manage.py syncdb --noinput
+python mkadmin.py
