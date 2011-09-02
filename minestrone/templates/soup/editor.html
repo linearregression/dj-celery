@@ -1,0 +1,17 @@
+{% extends "soup/_skel.html" %}
+
+{% block title %}Editor{% endblock %}
+
+{% block content %}
+    <div>
+        <form action="/editor/" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <p class="field">
+            <input type="submit" name="submit" value="Enqueue" id="button" />
+        </p>
+        </form>
+    </div>
+{% endblock %}
