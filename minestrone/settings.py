@@ -1,6 +1,12 @@
 # Django settings for minestrone project.
 
 import os
+import json
+import djcelery
+
+# Load the DotCloud environment
+with open('/home/dotcloud/environment.json') as f:
+  dotcloud_env = json.load(f)
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -21,6 +27,15 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
+
+# Configure Celery using the RabbitMQ credentials found in the DotCloud
+# environment.
+djcelery.setup_loader()
+BROKER_HOST = dotcloud_env['DOTCLOUD_BROKER_AMQP_HOST']
+BROKER_PORT = int(dotcloud_env['DOTCLOUD_BROKER_AMQP_PORT'])
+BROKER_USER = dotcloud_env['DOTCLOUD_BROKER_AMQP_LOGIN']
+BROKER_PASSWORD = dotcloud_env['DOTCLOUD_BROKER_AMQP_PASSWORD']
+BROKER_VHOST = '/'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -123,6 +138,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'minestrone.soup',
+    'djcelery',
 )
 
 # A sample logging configuration. The only tangible logging
