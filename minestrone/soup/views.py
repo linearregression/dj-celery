@@ -1,14 +1,13 @@
 from django.http import HttpResponseRedirect
-from django.template import RequestContext
-from django.shortcuts import render_to_response
+from django.views.generic import TemplateView, FormView
 from django import forms
 
 from minestrone.soup import tasks
 
-def jobs(request):
-    return render_to_response('soup/jobs.html')
+class JobsView(TemplateView):
+    template_name = 'soup/jobs.html'
 
-def editor(request):
+class EditorView(FormView):
 
     class FormAddJob(forms.Form):
         job_name = forms.CharField(
@@ -23,18 +22,12 @@ def editor(request):
                 initial='default'
         )
 
-    if request.method == 'POST':
-        form = FormAddJob(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['job_name']
-            queue = form.cleaned_data['queue_name']
-            tasks.lazy_job.apply_async(args=[name], rounting_key=queue)
-            return HttpResponseRedirect('/jobs/')
-    else:
-        form = FormAddJob(auto_id=True)
+    template_name = 'soup/editor.html'
+    success_url = '/jobs/'
+    form_class = FormAddJob
 
-    return render_to_response(
-            'soup/editor.html',
-            {'form': form},
-            context_instance=RequestContext(request)
-    )
+    def form_valid(self, form):
+        name = form.cleaned_data['job_name']
+        queue = form.cleaned_data['queue_name']
+        tasks.lazy_job.apply_async(args=[name], rounting_key=queue)
+        return HttpResponseRedirect(self.get_success_url())

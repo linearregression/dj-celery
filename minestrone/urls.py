@@ -4,6 +4,8 @@ from django.conf.urls.defaults import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
+import minestrone.soup.views
+
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'minestrone.views.home', name='home'),
@@ -15,7 +17,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^$', 'minestrone.soup.views.jobs'),
-    url(r'^jobs/$', 'minestrone.soup.views.jobs'),
-    url(r'^editor/$', 'minestrone.soup.views.editor'),
+    url(r'^$', minestrone.soup.views.JobsView.as_view()),
+    url(r'^jobs/$', minestrone.soup.views.JobsView.as_view()),
+    url(r'^editor/$', minestrone.soup.views.EditorView.as_view()),
 )
