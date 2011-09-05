@@ -3,7 +3,28 @@
 {% block title %}Jobs{% endblock %}
 
 {% block content %}
-    <h2>Queues</h2>
-
-    <p>TBD.</p>
+    <h2>Workers</h2>
+        {% for worker in workers.items %}
+        <h3>{{ worker.0 }}:</h3>
+            <div class="listing">
+                {% if worker.1 %}
+                {% for task in worker.1 %}
+                <table>
+                <thead>
+                    <tr><th>Type</th><th>Args</th><th>Queue</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>{{ task.name }}</td><td>{{ task.args }}</td><td>{{ task.delivery_info.routing_key }}</td></tr>
+                </tbody>
+                </table>
+                {% endfor %}
+                {% else %}
+                <em>No jobs pending.</em>
+                {% endif %}
+            </div>
+        {% empty %}
+        <div class="listing">
+            <em>No workers running.</em>
+        </div>
+        {% endfor %}
 {% endblock %}

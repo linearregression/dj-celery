@@ -1,11 +1,18 @@
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView, FormView
 from django import forms
+from celery.task.control import inspect
 
 from minestrone.soup import tasks
 
 class JobsView(TemplateView):
     template_name = 'soup/jobs.html'
+
+    def get_context_data(self, **kwargs):
+        return {
+            'params': kwargs,
+            'workers': inspect().active(),
+        }
 
 class EditorView(FormView):
 
