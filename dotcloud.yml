@@ -6,3 +6,6 @@ broker:
 
 workers:
     type: python-worker
+
+db:
+    type: postgresql

@@ -23,7 +23,13 @@ setup_django_celery() {
     cat > $HOME/current/supervisord.conf << EOF
 [program:djcelery]
 directory = $HOME/current/
-command = python minestrone/manage.py celeryd -l info -c 2
+command = python minestrone/manage.py celeryd -E -l info -c 2
+stderr_logfile = /var/log/supervisor/%(program_name)s_error.log
+stdout_logfile = /var/log/supervisor/%(program_name)s.log
+
+[program:celerycam]
+directory = $HOME/current/
+command = python minestrone/manage.py celerycam
 stderr_logfile = /var/log/supervisor/%(program_name)s_error.log
 stdout_logfile = /var/log/supervisor/%(program_name)s.log
 EOF
