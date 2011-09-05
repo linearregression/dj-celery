@@ -3,15 +3,22 @@
 {% block title %}Editor{% endblock %}
 
 {% block content %}
-    <div>
+    <h2>Add a job</h2>
+
+    <div class="editor">
         <form action="/editor/" method="post" accept-charset="utf-8" enctype="multipart/form-data">
         {% csrf_token %}
 
-        {{ form.as_p }}
+        {% for field in form %}
+        <div class="field">
+            {{ field.errors }}
+            {{ field.label_tag }} {{ field }}
+        </div>
+        {% endfor %}
 
-        <p class="field">
+        <div class="field">
             <input type="submit" name="submit" value="Enqueue" id="button" />
-        </p>
+        </div>
         </form>
     </div>
 {% endblock %}
