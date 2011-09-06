@@ -13,17 +13,19 @@
 </head>
 
 <body>
-    <div class="title">
-        <h1>{% block title %}{% endblock %}</h1>
-        <ul class="navbar">
-            <li><a href=/jobs/>Jobs</a></li>
-            <li id="editor-link"><a href=/editor/>Editor</a></li>
-        </ul>
+    <div id="container">
+        <div class="title">
+            <h1>{% block title %}{% endblock %}</h1>
+            <ul class="navbar">
+                <li><a href=/jobs/>Jobs</a></li>
+                <li id="editor-link"><a href=/editor/>Editor</a></li>
+            </ul>
+        </div>
+
+        {% block content %}{% endblock %}
     </div>
 
-    {% block content %}{% endblock %}
-
-    <div class="footer">
+    <div id="footer">
         <p>A DotCloud/Django/Celery example. <a href="#">Get the source!</a></p>
     </div>
 </body>
