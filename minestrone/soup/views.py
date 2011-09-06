@@ -11,7 +11,7 @@ class JobsView(TemplateView):
     def get_context_data(self, **kwargs):
         return {
             'params': kwargs,
-            'workers': inspect().active(),
+            'nodes': inspect().active(),
         }
 
 class EditorView(FormView):

@@ -3,28 +3,29 @@
 {% block title %}Jobs{% endblock %}
 
 {% block content %}
-    <h2>Workers</h2>
-        {% for worker in workers.items %}
-        <h3>{{ worker.0 }}:</h3>
+    <h2>Nodes</h2>
+        {% for n in nodes.items %}
+        {# n is a pair with the hostname and the list of active tasks of the node #}
+        <h3>{{ n.0 }}:</h3>
             <div class="listing">
-                {% if worker.1 %}
+                {% if n.1 %}
                 <table>
                 <thead>
                     <tr><th>Type</th><th>Args</th><th>Routing Key</th></tr>
                 </thead>
                 <tbody>
-                {% for task in worker.1 %}
+                {% for task in n.1 %}
                     <tr><td>{{ task.name }}</td><td>{{ task.args }}</td><td>{{ task.delivery_info.routing_key }}</td></tr>
                 {% endfor %}
                 </tbody>
                 </table>
                 {% else %}
-                <em>No jobs pending.</em>
+                <em>No active jobs.</em>
                 {% endif %}
             </div>
         {% empty %}
         <div class="listing">
-            <em>No workers running.</em>
+            <em>No nodes running.</em>
         </div>
         {% endfor %}
 {% endblock %}
