@@ -111,12 +111,12 @@ em {
 .field label {
     text-align: right;
     float: left;
-    width: 110px;
+    width: 150px;
     margin-right: 5px;
 }
 
 .field input {
-    width: 150px;
+    width: 155px;
 }
 
 #button {

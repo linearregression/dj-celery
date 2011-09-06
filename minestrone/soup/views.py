@@ -22,10 +22,10 @@ class EditorView(FormView):
                 required=True,
                 label='Job name:'
         )
-        queue_name = forms.CharField(
+        routing_key_name = forms.CharField(
                 max_length=128,
                 required=True,
-                label='Queue name:',
+                label='Routing key name:',
                 initial='default'
         )
 
@@ -35,6 +35,6 @@ class EditorView(FormView):
 
     def form_valid(self, form):
         name = form.cleaned_data['job_name']
-        queue = form.cleaned_data['queue_name']
-        tasks.lazy_job.apply_async(args=[name], rounting_key=queue)
+        routing_key = 'tasks.{0}'.format(form.cleaned_data['routing_key_name'])
+        tasks.lazy_job.apply_async(args=[name], routing_key=routing_key)
         return HttpResponseRedirect(self.get_success_url())

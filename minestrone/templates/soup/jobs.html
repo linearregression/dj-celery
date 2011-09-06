@@ -8,16 +8,16 @@
         <h3>{{ worker.0 }}:</h3>
             <div class="listing">
                 {% if worker.1 %}
-                {% for task in worker.1 %}
                 <table>
                 <thead>
-                    <tr><th>Type</th><th>Args</th><th>Queue</th></tr>
+                    <tr><th>Type</th><th>Args</th><th>Routing Key</th></tr>
                 </thead>
                 <tbody>
+                {% for task in worker.1 %}
                     <tr><td>{{ task.name }}</td><td>{{ task.args }}</td><td>{{ task.delivery_info.routing_key }}</td></tr>
+                {% endfor %}
                 </tbody>
                 </table>
-                {% endfor %}
                 {% else %}
                 <em>No jobs pending.</em>
                 {% endif %}

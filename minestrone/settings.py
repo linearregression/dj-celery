@@ -37,6 +37,16 @@ BROKER_USER = dotcloud_env['DOTCLOUD_BROKER_AMQP_LOGIN']
 BROKER_PASSWORD = dotcloud_env['DOTCLOUD_BROKER_AMQP_PASSWORD']
 BROKER_VHOST = '/'
 
+# A very simple queue, just to illustrate the principle of routing.
+CELERY_DEFAULT_QUEUE = 'default'
+CELERY_QUEUES = {
+    'default': {
+        'exchange': 'default',
+        'exchange_type': 'topic',
+        'binding_key': 'tasks.#'
+    }
+}
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
